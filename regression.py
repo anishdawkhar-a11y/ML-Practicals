@@ -1,29 +1,33 @@
-import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-# Input: Study hours and practice hours
-input_data = np.array([
-    [2, 1],
-    [3, 2],
-    [4, 3],
-    [5, 4],
-    [6, 5]
-])
+# Load dataset from CSV
+data = pd.read_csv("multivariate_linear_regression_data.csv")
 
-# Output: Marks obtained
-student_marks = np.array([30, 40, 50, 60, 70])
+# Select input features and target
+X = data[["Study_Hours", "Practice_Hours"]]
+y = data["Student_Marks"]
 
-# Create and train the model
+# Train the multivariate linear regression model
 model = LinearRegression()
-model.fit(input_data, student_marks)
+model.fit(X, y)
 
-# Predict marks for two new students
-new_students = np.array([
-    [7, 6],
-    [8, 7]
-])
+# Predict marks for the existing students
+predicted = model.predict(X)
 
-predicted_marks = model.predict(new_students)
+# Print actual and predicted marks
+print("Actual vs Predicted Marks")
+for actual, prediction in zip(y, predicted):
+    print(f"Actual: {actual:.2f}, Predicted: {prediction:.2f}")
 
-print("Student 1 Predicted Marks:", predicted_marks[0])
-print("Student 2 Predicted Marks:", predicted_marks[1])
+# Draw only a scatter plot (dots only)
+plt.figure(figsize=(8, 6))
+plt.scatter(y, predicted, s=60)
+
+plt.xlabel("Actual Student Marks")
+plt.ylabel("Predicted Student Marks")
+plt.title("Actual vs Predicted Student Marks")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
