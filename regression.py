@@ -2,10 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-# Load dataset from CSV
+# Load the student dataset
 data = pd.read_csv("multivariate_linear_regression_data.csv")
 
-# Select input features and target
+# Input features and target
 X = data[["Study_Hours", "Practice_Hours"]]
 y = data["Student_Marks"]
 
@@ -13,18 +13,17 @@ y = data["Student_Marks"]
 model = LinearRegression()
 model.fit(X, y)
 
-# Predict marks for the existing students
+# Predict marks
 predicted = model.predict(X)
 
-# Print actual and predicted marks
+# Display actual and predicted marks
 print("Actual vs Predicted Marks")
 for actual, prediction in zip(y, predicted):
     print(f"Actual: {actual:.2f}, Predicted: {prediction:.2f}")
 
-# Draw only a scatter plot (dots only)
+# Scatter plot: dots only
 plt.figure(figsize=(8, 6))
 plt.scatter(y, predicted, s=60)
-
 plt.xlabel("Actual Student Marks")
 plt.ylabel("Predicted Student Marks")
 plt.title("Actual vs Predicted Student Marks")
